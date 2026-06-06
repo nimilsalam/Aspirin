@@ -42,3 +42,10 @@ python -m http.server 4173
 ```bash
 npm test
 ```
+
+## Deploy (Vercel)
+
+The app is a static site (HTML, CSS, and ES modules) with no build step, hosted on **Vercel**. The included `vercel.json` configures Vercel to serve the repository root as static files.
+
+- **Git integration**: import the repository at [vercel.com/new](https://vercel.com/new). No build command or framework preset is needed — Vercel serves the static files directly.
+- **CLI**: from the project root, run `npx vercel` (preview) or `npx vercel --prod` (production).
