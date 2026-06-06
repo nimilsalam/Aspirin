@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aspirin Health Coach</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Aspirin: Rural Health Coach</h1>
+      <p>
+        Scan this QR code to open the same page on mobile and submit daily healthy actions.
+      </p>
+      <img id="qrcode-img" class="qr" src="" alt="QR code" />
+
+      <section>
+        <h2>1) First-time signup & health rating</h2>
+        <form id="signup-form">
+          <label>Age <input type="number" name="age" min="1" required /></label>
+          <label>Height (cm) <input type="number" name="heightCm" min="50" required /></label>
+          <label>Weight (kg) <input type="number" name="weightKg" min="10" required /></label>
+          <label><input type="checkbox" name="hasDiabetes" /> Diagnosed diabetes</label>
+          <label><input type="checkbox" name="hasHypertension" /> Diagnosed hypertension</label>
+          <label><input type="checkbox" name="usesTobacco" /> Uses tobacco</label>
+          <label><input type="checkbox" name="frequentAlcohol" /> Frequent alcohol</label>
+          <button type="submit">Calculate health rating</button>
+        </form>
+        <p id="initial-result"></p>
+        <ul id="recommendations-list"></ul>
+      </section>
+
+      <section>
+        <h2>2) Daily healthy actions update</h2>
+        <form id="daily-form">
+          <label><input type="checkbox" name="walked30Minutes" /> Walked/exercised 30 mins</label>
+          <label><input type="checkbox" name="ateVegetablesAndFiber" /> Ate vegetables/fiber</label>
+          <label><input type="checkbox" name="avoidedSugaryDrinks" /> Avoided sugary drinks</label>
+          <label><input type="checkbox" name="lowSaltMeals" /> Followed low-salt meals</label>
+          <label><input type="checkbox" name="tookMedicinesOnTime" /> Took medicines on time</label>
+          <label><input type="checkbox" name="drinkWaterAdequately" /> Drank enough water</label>
+          <label><input type="checkbox" name="slept7Hours" /> Slept 7+ hours</label>
+          <label><input type="checkbox" name="didStressRelief" /> Did stress-relief activity</label>
+          <button type="submit">Submit daily update</button>
+        </form>
+        <p id="daily-result"></p>
+      </section>
+
+      <section>
+        <h2>3) Optional free AI guidance API</h2>
+        <form id="ai-form">
+          <label>API endpoint <input type="url" name="endpoint" placeholder="https://..." /></label>
+          <label>API key (optional) <input type="password" name="apiKey" /></label>
+          <label>
+            Your question
+            <textarea
+              name="question"
+              rows="3"
+              placeholder="How to reduce diabetes risk with local food options?"
+            ></textarea>
+          </label>
+          <button type="submit">Ask AI</button>
+        </form>
+        <pre id="ai-response"></pre>
+      </section>
+    </main>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>
