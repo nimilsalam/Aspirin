@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="theme-color" content="#0a7d4d" />
+    <title>Aspirin Health Coach</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- Language selection screen -->
+      <section id="screen-language" class="screen active">
+        <div class="brand">
+          <div class="brand-mark">+</div>
+          <h1 id="lang-title">Aspirin</h1>
+        </div>
+        <h2 data-i18n="chooseLanguage">Choose your language</h2>
+        <div class="lang-buttons">
+          <button class="lang-btn" data-lang="en" data-i18n="english">English</button>
+          <button class="lang-btn" data-lang="ml" data-i18n="malayalam">മലയാളം</button>
+        </div>
+      </section>
+
+      <!-- Intro + data entry screen -->
+      <section id="screen-form" class="screen">
+        <header class="app-header">
+          <h1 data-i18n="appTitle">Aspirin Health Coach</h1>
+          <button id="change-language" class="link-btn" data-i18n="changeLanguage">
+            Change language
+          </button>
+        </header>
+
+        <p class="intro" data-i18n="intro"></p>
+        <p class="partial-note" data-i18n="partialNote"></p>
+
+        <form id="health-form" class="card" novalidate>
+          <h2 data-i18n="yourDetails">Your details</h2>
+
+          <details class="section" open>
+            <summary><span class="sec-icon" aria-hidden="true">👤</span><span data-i18n="secAboutYou">About you</span></summary>
+            <div class="field-grid">
+              <label>
+                <span data-i18n="age">Age</span>
+                <input type="number" name="age" min="1" max="120" inputmode="numeric" />
+                <small class="help" data-i18n="helpAge"></small>
+              </label>
+              <label>
+                <span data-i18n="sex">Sex</span>
+                <select name="sex">
+                  <option value="male" data-i18n="male">Male</option>
+                  <option value="female" data-i18n="female">Female</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="heightCm">Height (cm)</span>
+                <input type="number" name="heightCm" min="50" max="250" inputmode="decimal" />
+                <small class="help" data-i18n="helpHeightCm"></small>
+              </label>
+              <label>
+                <span data-i18n="weightKg">Weight (kg)</span>
+                <input type="number" name="weightKg" min="10" max="300" inputmode="decimal" />
+                <small class="help" data-i18n="helpWeightKg"></small>
+              </label>
+            </div>
+          </details>
+
+          <details class="section">
+            <summary><span class="sec-icon" aria-hidden="true">🩸</span><span data-i18n="secBloodSugar">Blood sugar</span></summary>
+            <p class="skip-hint" data-i18n="skipHint"></p>
+            <div class="field-grid">
+              <label>
+                <span data-i18n="fastingGlucose">Fasting blood sugar (mg/dL)</span>
+                <input type="number" name="fastingGlucose" min="40" max="600" inputmode="numeric" />
+                <small class="help" data-i18n="helpFastingGlucose"></small>
+              </label>
+              <label>
+                <span data-i18n="hba1c">HbA1c (%)</span>
+                <input type="number" name="hba1c" min="3" max="20" step="0.1" inputmode="decimal" />
+                <small class="help" data-i18n="helpHba1c"></small>
+              </label>
+            </div>
+          </details>
+
+          <details class="section">
+            <summary><span class="sec-icon" aria-hidden="true">💓</span><span data-i18n="secBloodPressure">Blood pressure</span></summary>
+            <p class="skip-hint" data-i18n="skipHint"></p>
+            <div class="field-grid">
+              <label>
+                <span data-i18n="systolic">Systolic BP (mmHg)</span>
+                <input type="number" name="systolic" min="70" max="260" inputmode="numeric" />
+                <small class="help" data-i18n="helpSystolic"></small>
+              </label>
+              <label>
+                <span data-i18n="diastolic">Diastolic BP (mmHg)</span>
+                <input type="number" name="diastolic" min="40" max="160" inputmode="numeric" />
+                <small class="help" data-i18n="helpDiastolic"></small>
+              </label>
+            </div>
+          </details>
+
+          <details class="section">
+            <summary><span class="sec-icon" aria-hidden="true">🧪</span><span data-i18n="secCholesterol">Cholesterol</span></summary>
+            <p class="skip-hint" data-i18n="skipHint"></p>
+            <div class="field-grid">
+              <label>
+                <span data-i18n="totalCholesterol">Total cholesterol (mg/dL)</span>
+                <input type="number" name="totalCholesterol" min="80" max="500" inputmode="numeric" />
+                <small class="help" data-i18n="helpTotalCholesterol"></small>
+              </label>
+              <label>
+                <span data-i18n="ldl">LDL cholesterol (mg/dL)</span>
+                <input type="number" name="ldl" min="30" max="400" inputmode="numeric" />
+                <small class="help" data-i18n="helpLdl"></small>
+              </label>
+              <label>
+                <span data-i18n="hdl">HDL cholesterol (mg/dL)</span>
+                <input type="number" name="hdl" min="10" max="150" inputmode="numeric" />
+                <small class="help" data-i18n="helpHdl"></small>
+              </label>
+              <label>
+                <span data-i18n="triglycerides">Triglycerides (mg/dL)</span>
+                <input type="number" name="triglycerides" min="30" max="1000" inputmode="numeric" />
+                <small class="help" data-i18n="helpTriglycerides"></small>
+              </label>
+            </div>
+          </details>
+
+          <details class="section">
+            <summary><span class="sec-icon" aria-hidden="true">🏃</span><span data-i18n="secLifestyle">Lifestyle</span></summary>
+            <div class="checks">
+              <label class="check"><input type="checkbox" name="hasDiabetes" /> <span data-i18n="hasDiabetes">Diagnosed diabetes</span></label>
+              <label class="check"><input type="checkbox" name="hasHypertension" /> <span data-i18n="hasHypertension">Diagnosed hypertension</span></label>
+              <label class="check"><input type="checkbox" name="usesTobacco" /> <span data-i18n="usesTobacco">Uses tobacco</span></label>
+            </div>
+          </details>
+
+          <p class="warn hidden" id="range-warning" data-i18n="rangeWarning" aria-live="polite"></p>
+          <p class="hint" data-i18n="optionalHint"></p>
+          <button type="submit" class="primary" data-i18n="calculate">Update my status</button>
+        </form>
+
+        <section id="results" class="card results hidden" aria-live="polite">
+          <h2 data-i18n="yourStatus">Your current status</h2>
+          <p class="as-of" id="as-of"></p>
+          <div class="score-ring" id="score-ring">
+            <span id="overall-score">0</span>
+            <small data-i18n="overallScore">Overall health score</small>
+          </div>
+          <p class="verdict" id="verdict"></p>
+          <p class="focus" id="focus"></p>
+          <p class="tap-hint" data-i18n="tapForTips"></p>
+          <ul class="metrics" id="metrics"></ul>
+          <h3 data-i18n="recommendations">How to improve</h3>
+          <ul class="recs" id="recommendations-list"></ul>
+          <button type="button" id="edit-values" class="secondary" data-i18n="editValues">Edit my values</button>
+        </section>
+      </section>
+    </div>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

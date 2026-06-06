@@ -1,0 +1,21 @@
+{
+  "name": "aspirin",
+  "version": "1.0.0",
+  "description": "Health coach",
+  "main": "src/healthLogic.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nimilsalam/Aspirin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/nimilsalam/Aspirin/issues"
+  },
+  "homepage": "https://github.com/nimilsalam/Aspirin#readme"
+}
