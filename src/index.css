@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-surface-muted text-ink antialiased;
+    font-family: theme('fontFamily.sans');
+  }
+  /* Avoid iOS zoom on input focus by keeping >= 16px font on form fields. */
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px;
+  }
+}
+
+@layer components {
+  .app-shell {
+    @apply mx-auto flex min-h-[100dvh] w-full max-w-md flex-col bg-surface-muted;
+  }
+  .card {
+    @apply rounded-xl2 bg-surface p-5 shadow-card;
+  }
+  .btn-primary {
+    @apply flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-500 px-6 py-4 text-lg font-semibold text-white transition active:scale-[0.99] active:bg-brand-600 disabled:opacity-40;
+  }
+  .btn-ghost {
+    @apply flex w-full items-center justify-center gap-2 rounded-2xl border border-brand-100 bg-surface px-6 py-4 text-lg font-semibold text-brand-700 transition active:scale-[0.99];
+  }
+  .field-label {
+    @apply mb-2 block text-base font-medium text-ink;
+  }
+  .field-input {
+    @apply w-full rounded-2xl border border-ink-faint/30 bg-surface px-4 py-3.5 text-lg text-ink outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
+  }
+  .choice {
+    @apply flex w-full items-center justify-between rounded-2xl border-2 border-ink-faint/20 bg-surface px-5 py-4 text-left text-lg font-medium text-ink transition active:scale-[0.99];
+  }
+  .choice-selected {
+    @apply border-brand-500 bg-brand-50 text-brand-700;
+  }
+}

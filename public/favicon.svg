@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Aspirin">
+  <rect width="512" height="512" rx="112" fill="#0b8a6f"/>
+  <path d="M256 120c-12 0-22 10-22 22v92h-92c-12 0-22 10-22 22s10 22 22 22h92v92c0 12 10 22 22 22s22-10 22-22v-92h92c12 0 22-10 22-22s-10-22-22-22h-92v-92c0-12-10-22-22-22z" fill="#ffffff"/>
+  <circle cx="256" cy="256" r="150" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="20"/>
+</svg>
