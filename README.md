@@ -7,14 +7,17 @@ Open the link (or scan a QR code) on a phone, pick a language, enter the values 
 ## Features
 
 - **Language selection first**: English or Malayalam (മലയാളം).
+- **Grouped, collapsible data entry**: inputs are split into *About you*, *Blood sugar*, *Blood pressure*, *Cholesterol*, and *Lifestyle* sections, each skippable, with per-field helper text and inline out-of-range validation.
 - **Instant status update**: enter BMI inputs, fasting glucose / HbA1c, blood pressure, and lipid values.
 - **Condition classification** using widely published numeric clinical cutoffs:
   - BMI — Asian/Indian consensus cutoffs (normal `<23`, overweight `23–24.9`, obese `≥25`).
   - Diabetes — fasting plasma glucose and HbA1c (ADA/WHO).
   - Blood pressure — systolic/diastolic (JNC/WHO).
   - Dyslipidemia — total cholesterol, LDL, HDL, triglycerides (NCEP ATP III).
-- **Overall health score** and **prevention recommendations** in the chosen language.
-- Values are stored locally in the browser so the link shows the latest status on reopen.
+- **Overall health score** with a plain-language verdict, a colour matching the worst risk, and a single "Focus on" priority area.
+- **Tappable result rows** revealing condition-specific tips and the numeric cutoff context, plus **prevention recommendations** in the chosen language.
+- **Accessible & adaptive**: visible focus styles, text-plus-colour risk badges, an accessible score label, dark-mode support, and reduced-motion handling.
+- Values are stored locally in the browser (with an "as of" date) so the link shows the latest status on reopen.
 
 > The numeric thresholds used are standard published clinical reference values. The app does not reproduce any copyrighted textbook text.
 

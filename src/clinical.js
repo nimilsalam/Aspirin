@@ -190,8 +190,35 @@ export function assessHealth(input = {}) {
     diabetes,
     bloodPressure,
     lipids,
-    overallScore
+    overallScore,
+    dataEntered:
+      bmiResult.category !== "unknown" ||
+      diabetes.category !== "unknown" ||
+      bloodPressure.category !== "unknown" ||
+      lipids.category !== "unknown"
   };
+}
+
+// Maps the overall score to a plain-language verdict translation key.
+export function getVerdictKey(assessment) {
+  if (!assessment || assessment.dataEntered === false) return "verdictUnknown";
+  const score = assessment.overallScore;
+  if (score >= 85) return "verdictGood";
+  if (score >= 60) return "verdictFair";
+  return "verdictPoor";
+}
+
+// Returns the highest-risk condition so the UI can surface a single focus area.
+// Ties are broken by clinical weighting: diabetes > blood pressure > lipids > BMI.
+export function getTopPriority(assessment) {
+  const conditions = [
+    { key: "diabetesLabel", risk: assessment.diabetes.risk },
+    { key: "bloodPressureLabel", risk: assessment.bloodPressure.risk },
+    { key: "lipidsLabel", risk: assessment.lipids.risk },
+    { key: "bmiLabel", risk: classifyBmi(assessment.bmi).risk }
+  ];
+  const worst = conditions.reduce((a, b) => (b.risk > a.risk ? b : a));
+  return worst.risk >= 1 ? worst.key : null;
 }
 
 // Returns translation keys (resolved to text in the UI layer) so that

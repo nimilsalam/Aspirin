@@ -7,7 +7,9 @@ import {
   classifyBloodPressure,
   classifyLipids,
   assessHealth,
-  getRecommendationKeys
+  getRecommendationKeys,
+  getVerdictKey,
+  getTopPriority
 } from "../src/clinical.js";
 
 test("getBmi computes BMI with one decimal", () => {
@@ -88,4 +90,28 @@ test("getRecommendationKeys adds condition-specific guidance", () => {
   assert.ok(keys.includes("recHypertension"));
   assert.ok(keys.includes("recDyslipidemia"));
   assert.ok(keys.includes("recWeight"));
+});
+
+test("getVerdictKey maps score bands and empty input", () => {
+  assert.equal(getVerdictKey({ dataEntered: false, overallScore: 100 }), "verdictUnknown");
+  assert.equal(getVerdictKey({ dataEntered: true, overallScore: 100 }), "verdictGood");
+  assert.equal(getVerdictKey({ dataEntered: true, overallScore: 70 }), "verdictFair");
+  assert.equal(getVerdictKey({ dataEntered: true, overallScore: 40 }), "verdictPoor");
+});
+
+test("getTopPriority surfaces the worst-risk condition or null", () => {
+  const healthy = assessHealth({
+    heightCm: 170,
+    weightKg: 65,
+    fastingGlucose: 90,
+    systolic: 118,
+    diastolic: 76,
+    totalCholesterol: 180,
+    hdl: 55,
+    triglycerides: 120
+  });
+  assert.equal(getTopPriority(healthy), null);
+
+  const highBp = assessHealth({ systolic: 150, diastolic: 95 });
+  assert.equal(getTopPriority(highBp), "bloodPressureLabel");
 });
