@@ -2,68 +2,116 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="theme-color" content="#0a7d4d" />
     <title>Aspirin Health Coach</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Aspirin: Rural Health Coach</h1>
-      <p>
-        Scan this QR code to open the same page on mobile and submit daily healthy actions.
-      </p>
-      <img id="qrcode-img" class="qr" src="" alt="QR code" />
-
-      <section>
-        <h2>1) First-time signup & health rating</h2>
-        <form id="signup-form">
-          <label>Age <input type="number" name="age" min="1" required /></label>
-          <label>Height (cm) <input type="number" name="heightCm" min="50" required /></label>
-          <label>Weight (kg) <input type="number" name="weightKg" min="10" required /></label>
-          <label><input type="checkbox" name="hasDiabetes" /> Diagnosed diabetes</label>
-          <label><input type="checkbox" name="hasHypertension" /> Diagnosed hypertension</label>
-          <label><input type="checkbox" name="usesTobacco" /> Uses tobacco</label>
-          <label><input type="checkbox" name="frequentAlcohol" /> Frequent alcohol</label>
-          <button type="submit">Calculate health rating</button>
-        </form>
-        <p id="initial-result"></p>
-        <ul id="recommendations-list"></ul>
+    <div class="app">
+      <!-- Language selection screen -->
+      <section id="screen-language" class="screen active">
+        <div class="brand">
+          <div class="brand-mark">+</div>
+          <h1 id="lang-title">Aspirin</h1>
+        </div>
+        <h2 data-i18n="chooseLanguage">Choose your language</h2>
+        <div class="lang-buttons">
+          <button class="lang-btn" data-lang="en" data-i18n="english">English</button>
+          <button class="lang-btn" data-lang="ml" data-i18n="malayalam">മലയാളം</button>
+        </div>
       </section>
 
-      <section>
-        <h2>2) Daily healthy actions update</h2>
-        <form id="daily-form">
-          <label><input type="checkbox" name="walked30Minutes" /> Walked/exercised 30 mins</label>
-          <label><input type="checkbox" name="ateVegetablesAndFiber" /> Ate vegetables/fiber</label>
-          <label><input type="checkbox" name="avoidedSugaryDrinks" /> Avoided sugary drinks</label>
-          <label><input type="checkbox" name="lowSaltMeals" /> Followed low-salt meals</label>
-          <label><input type="checkbox" name="tookMedicinesOnTime" /> Took medicines on time</label>
-          <label><input type="checkbox" name="drinkWaterAdequately" /> Drank enough water</label>
-          <label><input type="checkbox" name="slept7Hours" /> Slept 7+ hours</label>
-          <label><input type="checkbox" name="didStressRelief" /> Did stress-relief activity</label>
-          <button type="submit">Submit daily update</button>
-        </form>
-        <p id="daily-result"></p>
-      </section>
+      <!-- Intro + data entry screen -->
+      <section id="screen-form" class="screen">
+        <header class="app-header">
+          <h1 data-i18n="appTitle">Aspirin Health Coach</h1>
+          <button id="change-language" class="link-btn" data-i18n="changeLanguage">
+            Change language
+          </button>
+        </header>
 
-      <section>
-        <h2>3) Optional free AI guidance API</h2>
-        <form id="ai-form">
-          <label>API endpoint <input type="url" name="endpoint" placeholder="https://..." /></label>
-          <label>API key (optional) <input type="password" name="apiKey" /></label>
-          <label>
-            Your question
-            <textarea
-              name="question"
-              rows="3"
-              placeholder="How to reduce diabetes risk with local food options?"
-            ></textarea>
-          </label>
-          <button type="submit">Ask AI</button>
+        <p class="intro" data-i18n="intro"></p>
+
+        <form id="health-form" class="card">
+          <h2 data-i18n="yourDetails">Your details</h2>
+
+          <div class="field-grid">
+            <label>
+              <span data-i18n="age">Age</span>
+              <input type="number" name="age" min="1" max="120" inputmode="numeric" />
+            </label>
+            <label>
+              <span data-i18n="sex">Sex</span>
+              <select name="sex">
+                <option value="male" data-i18n="male">Male</option>
+                <option value="female" data-i18n="female">Female</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="heightCm">Height (cm)</span>
+              <input type="number" name="heightCm" min="50" max="250" inputmode="decimal" />
+            </label>
+            <label>
+              <span data-i18n="weightKg">Weight (kg)</span>
+              <input type="number" name="weightKg" min="10" max="300" inputmode="decimal" />
+            </label>
+            <label>
+              <span data-i18n="fastingGlucose">Fasting blood sugar (mg/dL)</span>
+              <input type="number" name="fastingGlucose" min="40" max="600" inputmode="numeric" />
+            </label>
+            <label>
+              <span data-i18n="hba1c">HbA1c (%)</span>
+              <input type="number" name="hba1c" min="3" max="20" step="0.1" inputmode="decimal" />
+            </label>
+            <label>
+              <span data-i18n="systolic">Systolic BP (mmHg)</span>
+              <input type="number" name="systolic" min="70" max="260" inputmode="numeric" />
+            </label>
+            <label>
+              <span data-i18n="diastolic">Diastolic BP (mmHg)</span>
+              <input type="number" name="diastolic" min="40" max="160" inputmode="numeric" />
+            </label>
+            <label>
+              <span data-i18n="totalCholesterol">Total cholesterol (mg/dL)</span>
+              <input type="number" name="totalCholesterol" min="80" max="500" inputmode="numeric" />
+            </label>
+            <label>
+              <span data-i18n="ldl">LDL cholesterol (mg/dL)</span>
+              <input type="number" name="ldl" min="30" max="400" inputmode="numeric" />
+            </label>
+            <label>
+              <span data-i18n="hdl">HDL cholesterol (mg/dL)</span>
+              <input type="number" name="hdl" min="10" max="150" inputmode="numeric" />
+            </label>
+            <label>
+              <span data-i18n="triglycerides">Triglycerides (mg/dL)</span>
+              <input type="number" name="triglycerides" min="30" max="1000" inputmode="numeric" />
+            </label>
+          </div>
+
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="hasDiabetes" /> <span data-i18n="hasDiabetes">Diagnosed diabetes</span></label>
+            <label class="check"><input type="checkbox" name="hasHypertension" /> <span data-i18n="hasHypertension">Diagnosed hypertension</span></label>
+            <label class="check"><input type="checkbox" name="usesTobacco" /> <span data-i18n="usesTobacco">Uses tobacco</span></label>
+          </div>
+
+          <p class="hint" data-i18n="optionalHint"></p>
+          <button type="submit" class="primary" data-i18n="calculate">Update my status</button>
         </form>
-        <pre id="ai-response"></pre>
+
+        <section id="results" class="card results hidden" aria-live="polite">
+          <h2 data-i18n="yourStatus">Your current status</h2>
+          <div class="score-ring">
+            <span id="overall-score">0</span>
+            <small data-i18n="overallScore">Overall health score</small>
+          </div>
+          <ul class="metrics" id="metrics"></ul>
+          <h3 data-i18n="recommendations">How to improve</h3>
+          <ul class="recs" id="recommendations-list"></ul>
+        </section>
       </section>
-    </main>
+    </div>
     <script type="module" src="./src/app.js"></script>
   </body>
 </html>
