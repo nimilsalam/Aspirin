@@ -7,6 +7,7 @@ import { DOMAIN_ORDER } from '../lib/feedback/rules';
 import { ScoreRing } from '../components/ScoreRing';
 import { PriorityList } from '../components/PriorityList';
 import { DomainCard } from '../components/DomainCard';
+import { QRShare } from '../components/QRShare';
 import { BottomNav } from '../components/BottomNav';
 import { TIER_COLOR, formatDate } from '../lib/ui';
 import type { ConditionResult, Language } from '../lib/types';
@@ -101,6 +102,11 @@ export function Report() {
           <button type="button" className="btn-ghost" onClick={() => navigate('/welcome')}>
             {t('common.retake')}
           </button>
+        </div>
+
+        {/* Scannable QR to share the link on screen */}
+        <div className="mt-5">
+          <QRShare />
         </div>
 
         <p className="mt-6 text-center text-xs leading-relaxed text-ink-faint">
