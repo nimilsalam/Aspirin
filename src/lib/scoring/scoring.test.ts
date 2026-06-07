@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import type { AssessmentInput } from '../types';
 import { calcIdrs, idrsBand, scoreDiabetes } from './idrs';
 import { bmiBand, hasAbdominalObesity } from './bmi';
-import { bpBand } from './bloodPressure';
+import { bpBand, scoreBloodPressure } from './bloodPressure';
 import { scoreLipids } from './lipids';
 import { computeResult } from './overall';
 
@@ -17,6 +17,8 @@ const base = (o: Partial<AssessmentInput> = {}): AssessmentInput => ({
   heightCm: 170,
   weightKg: 70,
   waistCm: 85,
+  knownDiabetes: false,
+  knownHypertension: false,
   bpKnown: false,
   activity: 'vigorous',
   diet: 'mixed',
@@ -129,18 +131,52 @@ describe('Abdominal obesity — waist ≥90 (M) / ≥80 (F)', () => {
   });
 });
 
-describe('Blood pressure — JNC classification', () => {
+describe('Blood pressure — ACC/AHA 2017 classification', () => {
   it.each([
     [119, 79, 'normal'],
-    [120, 80, 'prehypertension'],
-    [139, 89, 'prehypertension'],
-    [140, 90, 'stage1'],
-    [159, 99, 'stage1'],
+    [120, 79, 'elevated'], // 120–129 AND <80
+    [129, 79, 'elevated'],
+    [120, 80, 'stage1'], // diastolic ≥80 -> stage 1
+    [130, 79, 'stage1'], // systolic ≥130
+    [139, 89, 'stage1'],
+    [140, 89, 'stage2'], // systolic ≥140
+    [139, 90, 'stage2'], // diastolic ≥90
     [160, 100, 'stage2'],
-    [135, 92, 'stage1'], // diastolic drives the band up
-    [165, 85, 'stage2'], // systolic drives the band up
   ] as const)('%i/%i -> %s', (sys, dia, band) => {
     expect(bpBand(sys, dia)).toBe(band);
+  });
+});
+
+describe('Known-patient handling (already diagnosed / on treatment)', () => {
+  it('known diabetes -> band present, danger', () => {
+    const r = scoreDiabetes(base({ knownDiabetes: true }));
+    expect(r.band).toBe('present');
+    expect(r.severity).toBe('danger');
+  });
+  it('known hypertension with no reading -> present, warn', () => {
+    const r = scoreBloodPressure(base({ knownHypertension: true }));
+    expect(r.band).toBe('present');
+    expect(r.severity).toBe('warn');
+  });
+  it('known hypertension but uncontrolled reading -> present, danger', () => {
+    const r = scoreBloodPressure(
+      base({ knownHypertension: true, bpKnown: true, systolic: 150, diastolic: 95 }),
+    );
+    expect(r.band).toBe('present');
+    expect(r.severity).toBe('danger');
+  });
+  it('known hypertension, controlled reading -> present, warn', () => {
+    const r = scoreBloodPressure(
+      base({ knownHypertension: true, bpKnown: true, systolic: 118, diastolic: 76 }),
+    );
+    expect(r.band).toBe('present');
+    expect(r.severity).toBe('warn');
+  });
+  it('treated diabetes + treated hypertension + abdominal obesity -> metabolic syndrome', () => {
+    const r = computeResult(
+      base({ sex: 'male', waistCm: 100, knownDiabetes: true, knownHypertension: true }),
+    );
+    expect(r.conditions.some((c) => c.key === 'metabolicSyndrome')).toBe(true);
   });
 });
 

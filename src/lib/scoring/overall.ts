@@ -53,11 +53,14 @@ function deriveClusters(
   const clusters: ConditionResult[] = [];
 
   // Metabolic-syndrome components use measured values (not the IDRS risk score)
-  // to avoid over-diagnosis: BP ≥130/85, fasting glucose ≥100.
+  // to avoid over-diagnosis: BP ≥130/85, fasting glucose ≥100. Per the harmonized
+  // criteria, drug treatment for raised BP / glucose also satisfies the component.
   const raisedBp =
+    input.knownHypertension ||
     (input.systolic != null && input.systolic >= 130) ||
     (input.diastolic != null && input.diastolic >= 85);
-  const raisedGlucose = input.fastingGlucose != null && input.fastingGlucose >= 100;
+  const raisedGlucose =
+    input.knownDiabetes || (input.fastingGlucose != null && input.fastingGlucose >= 100);
   const lowHdl =
     input.hdl != null && input.hdl < (input.sex === 'male' ? 40 : 50);
   const highTg = input.triglycerides != null && input.triglycerides >= 150;
@@ -78,13 +81,17 @@ function deriveClusters(
     });
   }
 
-  // High CVD risk: current smoker + hypertension + (high diabetes risk OR high lipids).
+  // High CVD risk: current smoker + hypertension + (high/known diabetes OR high lipids).
   const hypertension =
-    byKey.bloodPressure?.band === 'stage1' || byKey.bloodPressure?.band === 'stage2';
+    input.knownHypertension ||
+    byKey.bloodPressure?.band === 'stage1' ||
+    byKey.bloodPressure?.band === 'stage2';
+  const diabetes =
+    input.knownDiabetes || byKey.diabetesRisk?.band === 'high';
   if (
     input.tobacco === 'current' &&
     hypertension &&
-    (byKey.diabetesRisk?.band === 'high' || byKey.lipids?.band === 'high')
+    (diabetes || byKey.lipids?.band === 'high')
   ) {
     clusters.push({ key: 'highCvdRisk', band: 'present', severity: 'danger' });
   }

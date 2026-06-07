@@ -30,6 +30,9 @@ export interface AssessmentInput {
   heightCm: number;
   weightKg: number;
   waistCm?: number;
+  // Known diagnoses (already told by a doctor / on treatment)
+  knownDiabetes: boolean;
+  knownHypertension: boolean;
   // Blood pressure (optional measured values)
   bpKnown: boolean;
   systolic?: number;
@@ -76,6 +79,7 @@ export type RiskBand =
   | 'low'
   | 'moderate'
   | 'high'
+  | 'elevated'
   | 'prehypertension'
   | 'stage1'
   | 'stage2'

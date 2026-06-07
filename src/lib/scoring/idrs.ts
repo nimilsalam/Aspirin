@@ -65,6 +65,19 @@ export function idrsBand(score: number): RiskBand {
 
 export function scoreDiabetes(input: AssessmentInput): ConditionResult {
   const score = calcIdrs(input);
+
+  // Already diagnosed / on treatment: this is management, not screening.
+  if (input.knownDiabetes) {
+    return {
+      key: 'diabetesRisk',
+      band: 'present',
+      value: score,
+      valueLabel:
+        input.fastingGlucose != null ? `${input.fastingGlucose} mg/dL` : 'Diagnosed',
+      severity: 'danger',
+    };
+  }
+
   let band = idrsBand(score);
 
   // A measured fasting glucose overrides/escalates the risk-score band

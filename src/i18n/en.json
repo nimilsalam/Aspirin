@@ -61,6 +61,8 @@
     "weight": "Weight (kg)",
     "waist": "Waist size (cm)",
     "waistHelp": "Measure around your tummy at the navel.",
+    "knownHypertension": "Has a doctor told you that you have high blood pressure (or are you on BP medicine)?",
+    "knownDiabetes": "Has a doctor told you that you have diabetes (or are you on sugar medicine)?",
     "bpKnown": "Do you know your blood pressure?",
     "systolic": "Upper number (systolic)",
     "diastolic": "Lower number (diastolic)",
