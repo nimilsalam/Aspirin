@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Aspirin",
+    "name": "Know Your Health",
     "tagline": "Your simple health check"
   },
   "language": {
@@ -41,7 +41,7 @@
     "listen": "Listen to advice",
     "retake": "Take the check again",
     "share": "Share with family",
-    "shareText": "Take this free 2-minute health check from Aspirin:",
+    "shareText": "Take this free 2-minute health check:",
     "today": "Today"
   },
   "steps": {
