@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getById, getLatest } from '../lib/storage';
@@ -8,6 +8,7 @@ import { ScoreRing } from '../components/ScoreRing';
 import { PriorityList } from '../components/PriorityList';
 import { DomainCard } from '../components/DomainCard';
 import { QRShare } from '../components/QRShare';
+import { QRModal } from '../components/QRModal';
 import { BottomNav } from '../components/BottomNav';
 import { TIER_COLOR, formatDate } from '../lib/ui';
 import type { ConditionResult, Language } from '../lib/types';
@@ -16,6 +17,7 @@ export function Report() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
+  const [showQR, setShowQR] = useState(false);
 
   const record = useMemo(() => (id ? getById(id) : getLatest()), [id]);
 
@@ -99,6 +101,9 @@ export function Report() {
           <button type="button" className="btn-primary" onClick={share}>
             🔗 {t('common.share')}
           </button>
+          <button type="button" className="btn-ghost" onClick={() => setShowQR(true)}>
+            ▣ {t('common.showQr')}
+          </button>
           <button type="button" className="btn-ghost" onClick={() => navigate('/welcome')}>
             {t('common.retake')}
           </button>
@@ -113,6 +118,8 @@ export function Report() {
           {t('welcome.disclaimer')}
         </p>
       </div>
+
+      {showQR && <QRModal url={window.location.origin} onClose={() => setShowQR(false)} />}
 
       <BottomNav />
     </div>
