@@ -1,5 +1,6 @@
 // Indian Diabetes Risk Score (IDRS) — Madras Diabetes Research Foundation (MDRF).
-// Four parameters, max 100. Bands: <30 low, 30–59 moderate, ≥60 high.
+// Four parameters, max 100. Bands: <30 low, 30–50 moderate, ≥60 high.
+// (Scores are multiples of 10, so no value falls between 51–59.)
 
 import type { AssessmentInput, ConditionResult, RiskBand, Severity } from '../types';
 
@@ -22,15 +23,16 @@ function waistPoints(input: AssessmentInput): number {
   return 20;
 }
 
+// MDRF IDRS physical-activity categories: 0 / 10 / 20 / 30.
 function activityPoints(input: AssessmentInput): number {
   switch (input.activity) {
-    case 'vigorous':
+    case 'vigorous': // vigorous exercise or strenuous manual work
       return 0;
-    case 'moderate':
+    case 'moderate': // moderate exercise or moderate physical activity
+      return 10;
+    case 'mild': // mild exercise or mild physical activity
       return 20;
-    case 'mild':
-      return 30;
-    case 'sedentary':
+    case 'sedentary': // no exercise and sedentary
       return 30;
   }
 }
@@ -63,18 +65,23 @@ export function idrsBand(score: number): RiskBand {
 
 export function scoreDiabetes(input: AssessmentInput): ConditionResult {
   const score = calcIdrs(input);
-  const band = idrsBand(score);
+  let band = idrsBand(score);
 
-  // Known diabetes (high fasting glucose) is always high severity.
-  const knownHigh = input.fastingGlucose != null && input.fastingGlucose >= 126;
+  // A measured fasting glucose overrides/escalates the risk-score band
+  // (ADA: 100–125 mg/dL = prediabetes, ≥126 = diabetes range).
+  const fpg = input.fastingGlucose;
+  if (fpg != null) {
+    if (fpg >= 126) band = 'high';
+    else if (fpg >= 100 && band === 'low') band = 'moderate';
+  }
 
   let severity: Severity = 'good';
   if (band === 'moderate') severity = 'warn';
-  if (band === 'high' || knownHigh) severity = 'danger';
+  if (band === 'high') severity = 'danger';
 
   return {
     key: 'diabetesRisk',
-    band: knownHigh ? 'high' : band,
+    band,
     value: score,
     valueLabel: `IDRS ${score}`,
     severity,
