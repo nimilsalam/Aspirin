@@ -59,6 +59,13 @@ export function Assessment() {
       content: (
         <div className="flex flex-col gap-6">
           <YesNo
+            label={t('fields.knownHypertension')}
+            value={d.knownHypertension}
+            onChange={(v) => set({ knownHypertension: v })}
+            yesLabel={t('common.yes')}
+            noLabel={t('common.no')}
+          />
+          <YesNo
             label={t('fields.bpKnown')}
             value={d.bpKnown}
             onChange={(v) => set({ bpKnown: v })}
@@ -143,16 +150,25 @@ export function Assessment() {
       title: t('steps.family'),
       valid: true,
       content: (
-        <ChoiceGroup
-          label={t('fields.familyDiabetes')}
-          value={d.diabetesFamilyHistory}
-          onChange={(v) => set({ diabetesFamilyHistory: v })}
-          options={[
-            { value: 'none', label: t('fields.familyNone') },
-            { value: 'one', label: t('fields.familyOne') },
-            { value: 'both', label: t('fields.familyBoth') },
-          ]}
-        />
+        <div className="flex flex-col gap-6">
+          <YesNo
+            label={t('fields.knownDiabetes')}
+            value={d.knownDiabetes}
+            onChange={(v) => set({ knownDiabetes: v })}
+            yesLabel={t('common.yes')}
+            noLabel={t('common.no')}
+          />
+          <ChoiceGroup
+            label={t('fields.familyDiabetes')}
+            value={d.diabetesFamilyHistory}
+            onChange={(v) => set({ diabetesFamilyHistory: v })}
+            options={[
+              { value: 'none', label: t('fields.familyNone') },
+              { value: 'one', label: t('fields.familyOne') },
+              { value: 'both', label: t('fields.familyBoth') },
+            ]}
+          />
+        </div>
       ),
     },
     {

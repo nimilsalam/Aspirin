@@ -45,6 +45,20 @@ export const en: FeedbackRegistry = {
       ],
       seeDoctor: true,
     },
+    present: {
+      title: 'You have diabetes',
+      whatThisMeans:
+        'A doctor has told you that you have diabetes. Good control protects your eyes, kidneys, nerves and heart.',
+      doctorMessage:
+        'Keep taking your medicines and keep up the food and walking. Small daily habits keep your sugar steady and prevent problems later.',
+      actionSteps: [
+        'Take your medicines as prescribed.',
+        'Check your sugar regularly, as your doctor advises.',
+        'Avoid sugar, sweets and cool drinks; eat less rice.',
+        'Walk 30+ minutes daily and check your feet often.',
+      ],
+      seeDoctor: true,
+    },
   },
 
   bloodPressure: {
@@ -55,10 +69,10 @@ export const en: FeedbackRegistry = {
         'Your blood pressure is good. Keep your salt low and stay active to protect your heart.',
       actionSteps: ['Keep salt under 1 teaspoon (5 g) a day.', 'Check your BP once a year.'],
     },
-    prehypertension: {
-      title: 'Blood pressure slightly high',
+    elevated: {
+      title: 'Blood pressure on the higher side',
       whatThisMeans:
-        'Your blood pressure is above normal. This is a warning stage before hypertension.',
+        'Your blood pressure is a little above normal. This is the warning stage before high blood pressure.',
       doctorMessage:
         'This is the stage to fix things naturally. Lower your salt, lose a little weight and stay active — you can avoid medicines.',
       actionSteps: [
@@ -75,6 +89,29 @@ export const en: FeedbackRegistry = {
           'Less salt, less fried and oily food',
         ],
       },
+    },
+    present: {
+      title: 'You have high blood pressure',
+      whatThisMeans:
+        'A doctor has told you that you have high blood pressure. Keeping it controlled protects your heart, brain and kidneys.',
+      doctorMessage:
+        'Keep taking your medicines every day, even when you feel fine. Check your BP regularly, cut down salt, and stay active.',
+      actionSteps: [
+        'Take your BP medicines every day as prescribed.',
+        'Check your blood pressure regularly.',
+        'Keep salt under 5 g/day; follow the DASH diet.',
+        'Stay active; limit alcohol; stop tobacco.',
+      ],
+      dietPlan: {
+        heading: 'DASH diet',
+        items: [
+          'Fruits and vegetables at every meal',
+          'Whole grains, pulses and nuts',
+          'Low-fat dairy',
+          'Avoid added salt, pickles and processed food',
+        ],
+      },
+      seeDoctor: true,
     },
     stage1: {
       title: 'High blood pressure (Stage 1)',

@@ -14,6 +14,8 @@ import { makeId, saveAssessment, setStoredLanguage } from '../lib/storage';
 /** Sensible starting values for the wizard draft. */
 const emptyDraft: Partial<AssessmentInput> = {
   sex: 'male',
+  knownDiabetes: false,
+  knownHypertension: false,
   bpKnown: false,
   activity: 'moderate',
   diet: 'mixed',
